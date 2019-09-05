@@ -1,0 +1,101 @@
+version: "2"
+services:
+  app:
+    image: laravel-docker:latest
+    container_name: laravel-docker-app
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    depends_on:
+      - redis
+      - mysql
+    ports:
+      - 8080:80
+    volumes:
+      - .:/var/www/html
+    environment:
+      APP_ENV: development
+      CONTAINER_ROLE: app
+      CACHE_DRIVER: redis
+      SESSION_DRIVER: redis
+      QUEUE_DRIVER: redis
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      DB_PORT: 3306
+      DB_HOST: mysql
+      DB_DATABASE: dockerdb
+      DB_USERNAME: docker
+      DB_PASSWORD: secret
+      APP_KEY: base64:qS1JoSLAELbJS+jrobkLSufg1eIyLZmozWnif07QpzY=
+      APP_DEBUG: 1
+      APP_TIMEZONE: Asia/Manila
+  scheduler:
+    image: laravel-docker:latest
+    container_name: laravel-docker-scheduler
+    depends_on:
+      - app
+    volumes:
+      - .:/var/www/html
+    environment:
+      APP_ENV: development
+      CONTAINER_ROLE: scheduler
+      CACHE_DRIVER: redis
+      SESSION_DRIVER: redis
+      QUEUE_DRIVER: redis
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      DB_PORT: 3306
+      DB_HOST: mysql
+      DB_DATABASE: dockerdb
+      DB_USERNAME: docker
+      DB_PASSWORD: secret
+      APP_KEY: base64:qS1JoSLAELbJS+jrobkLSufg1eIyLZmozWnif07QpzY=
+      APP_DEBUG: 1
+      APP_TIMEZONE: Asia/Manila
+  queue:
+    image: laravel-docker:latest
+    container_name: laravel-docker-queue
+    depends_on:
+      - app
+    volumes:
+      - .:/var/www/html
+    environment:
+      APP_ENV: development
+      CONTAINER_ROLE: queue
+      CACHE_DRIVER: redis
+      SESSION_DRIVER: redis
+      QUEUE_DRIVER: redis
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      DB_PORT: 3306
+      DB_HOST: mysql
+      DB_DATABASE: dockerdb
+      DB_USERNAME: docker
+      DB_PASSWORD: secret
+      APP_KEY: base64:qS1JoSLAELbJS+jrobkLSufg1eIyLZmozWnif07QpzY=
+      APP_DEBUG: 1
+      APP_TIMEZONE: Asia/Manila
+  redis:
+    container_name: laravel-docker-redis
+    image: redis:4-alpine
+    ports:
+      - 6379:6379
+    volumes:
+      - redis:/data
+  mysql:
+      container_name: laravel-docker-mysql
+      image: mysql:5.7
+      ports:
+      - 23306:3306
+      volumes:
+      - mysql:/var/lib/mysql
+      environment:
+          MYSQL_DATABASE: laravel-docker
+          MYSQL_ROOT_PASSWORD: secret
+          MYSQL_USER: docker
+          MYSQL_PASSWORD: secret
+volumes:
+  redis:
+    driver: "local"
+  mysql:
+    driver: "local"
