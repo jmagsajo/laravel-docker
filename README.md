@@ -26,7 +26,7 @@ This is a simple laravel docker setup using apache server
 ## Visit your website
   - http://{hostname}:8080
 
-##Note
+## Note
    - If `docker-compose up -d` was failed to up
       - run `sudo dos2unix .docker/entrypoint.sh`
       - then build and run again the server
