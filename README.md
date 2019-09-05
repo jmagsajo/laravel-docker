@@ -22,7 +22,10 @@ This is a simple laravel docker setup using apache server
     - run `docker-compose exec queue bash`
     - run `docker-compose exec scheduler bash`
     - run `docker-compose exec mysql bash`
-    
+
+## Visit your website
+  - http://{hostname}:8080
+
 ##Note
    - If `docker-compose up -d` was failed to up
       - run `sudo dos2unix .docker/entrypoint.sh`
