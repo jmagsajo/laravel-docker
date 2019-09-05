@@ -13,10 +13,19 @@ This is a simple laravel docker setup using apache server
 ## Build and Start the Server
   - run `docker-compose build`
   - run `docker-compose up -d`
- 
+## Check if all the containers are ups
+  - run `docker-compose ps`
+  
 ## Interaction with the docker containers
   - run `docker-compose exec {name} bash`
     - run `docker-compose exec app bash`
     - run `docker-compose exec queue bash`
     - run `docker-compose exec scheduler bash`
     - run `docker-compose exec mysql bash`
+    
+##Note
+   - If `docker-compose up -d` was failed to up
+      - run `sudo dos2unix .docker/entrypoint.sh`
+      - then build and run again the server
+      - install dos2unix if command not found.
+        - run `sudo apt-get install dos2unix`
