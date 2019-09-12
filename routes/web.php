@@ -14,3 +14,4 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/test', ['uses' => '\App\Http\Controllers\SampleController@test']);
