@@ -13,7 +13,7 @@ This is a simple laravel docker setup using apache server
 ## Build and Start the Server
   - run `docker-compose build`
   - run `docker-compose up -d`
-## Check if all the containers are ups
+## Check if all the containers are running
   - run `docker-compose ps`
   
 ## Interaction with the docker containers
